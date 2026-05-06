@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>六级精进打卡</title>
+<style>
+body{font-family:system-ui;background:#f3f6fb;padding:20px}
+h1{text-align:center}
+.day{background:#fff;margin:12px 0;padding:12px;border-radius:10px}
+label{display:block;margin:6px 0}
+.done{text-decoration:line-through;color:#8aa}
+</style>
+</head>
+<body>
+<h1>📘 六级精进打卡（表达库模式）</h1>
+<div id="list"></div>
+<script>
+const tasks=[
+"精听真题听力3分钟 + 记场景词",
+"阅读1篇 + 拆2句长难句进表达库",
+"翻译1篇 + 抄3个高级表达",
+"作文句型抄写 + 仿写2句",
+"复盘错题 + 整理表达库"
+];
+const days=37;
+const list=document.getElementById("list");
+for(let d=1;d<=days;d++){
+ const box=document.createElement("div");
+ box.className="day";
+ box.innerHTML="<h3>第 "+d+" 天</h3>";
+ tasks.forEach((t,i)=>{
+  const id="d"+d+"t"+i;
+  const checked=localStorage.getItem(id)==="1";
+  const lab=document.createElement("label");
+  lab.className=checked?"done":"";
+  lab.innerHTML=`<input type="checkbox" ${checked?"checked":""}> ${t}`;
+  lab.querySelector("input").onchange=e=>{
+   if(e.target.checked){localStorage.setItem(id,"1");lab.className="done";}
+   else{localStorage.removeItem(id);lab.className="";}
+  };
+  box.appendChild(lab);
+ });
+ list.appendChild(box);
+}
+</script>
+</body>
+</html>
